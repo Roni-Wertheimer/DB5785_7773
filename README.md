@@ -1,3 +1,118 @@
+# Hotel Organization System  - Room & Housekeeping Division
+### Student Name: Aharon Wertheimer  
+
+---
+
+## Table of Contents
+
+1. [Introduction](#introduction)  
+2. [ERD & DSD Diagrams](#erd--dsd-diagrams)  
+3. [Design Decisions](#design-decisions)  
+4. [Data Insertion Methods](#data-insertion-methods)  
+5. [Backup & Restore](#backup--restore)  
+
+---
+
+## Introduction
+
+The **Hotel Organization** system is designed to manage the daily operational processes of a hotel.  
+It includes several core modules such as:  
+- Housekeeping and Maintenance task management  
+- Task assignments to employees  
+- Inventory tracking and equipment usage  
+
+The system stores data about hotel rooms, staff, maintenance requests, housekeeping tasks, inventory usage, and more.  
+Its main goal is to streamline hotel operations, ensure consistent maintenance, and improve the guest experience.
+
+---
+
+## ERD & DSD Diagrams
+
+### ERD (Entity-Relationship Diagram):
+
+![image ERD](https://github.com/user-attachments/assets/5c55c545-853b-4d8d-b839-fa8de5c81bec)
+
+
+### DSD (Data Structure Diagram):
+
+![image RS](https://github.com/user-attachments/assets/7e3ef2df-119d-4db9-836b-76d8bb119fd4)
+
+---
+
+## Design Decisions
+
+1. **Separation between Housekeeping and Maintenance modules** – This was chosen to reflect the different responsibilities of hotel departments.
+2. **Use of linking tables (AssignKeepingStaff / AssignMaintenanceStaff)** – These allow flexibility in assigning multiple staff members to multiple tasks.
+3. **Dedicated Inventory tables** – To enable accurate tracking of item and equipment usage.
+
+---
+
+## Data Insertion Methods
+
+To populate the database with realistic test data, we used three methods:
+
+1. **Mockaroo – Online Data Generator**  
+   Used to generate realistic mock data exported in CSV format.  
+   ![image](https://github.com/user-attachments/assets/fbd50395-7136-465c-8835-14ecb9983446)
+   ![image](https://github.com/user-attachments/assets/c9ca38e0-eb07-4bd7-ab32-5174a45b8741)
+   ![image](https://github.com/user-attachments/assets/834c3b03-91e0-459e-a055-caee1d05f01a)
+   ![image](https://github.com/user-attachments/assets/90e2a5d0-4885-46ef-9495-aee54adfeb29)
+
+
+
+
+
+3. **GenerateData.com**  
+   Another online platform to generate tabular data with various formats, used for fields not covered by Mockaroo.  
+   ![image](https://github.com/user-attachments/assets/107e53e5-d720-45b8-9809-8595109b66e6)
+   ![image](https://github.com/user-attachments/assets/5be8d1fe-170b-4662-9fad-595656ed23b8)
+
+
+
+5. **Python Script – `generate_insert_script.py`**  
+   A custom script written in Python that randomly generates and outputs SQL `INSERT` statements for all required tables.  
+   ![image](https://github.com/user-attachments/assets/b0cec8dc-2de4-45c1-8092-098be8ac348d)
+   ![image](https://github.com/user-attachments/assets/054d669f-d2ee-47c5-95bd-9f0b53439866)
+   ![image](https://github.com/user-attachments/assets/5ed8a3c4-466b-49a3-a15a-075be3d41303)
+   ![image](https://github.com/user-attachments/assets/f1750d42-d43c-4e36-b951-6193c517a037)
+   ![image](https://github.com/user-attachments/assets/396b765d-f3a5-443e-a733-3473821863a8)
+   ![image](https://github.com/user-attachments/assets/7c1ae749-d1b0-4051-87bd-e6da47f0d882)
+   ![image](https://github.com/user-attachments/assets/2c22629b-15e7-4574-b326-7fdb6b1c7d70)
+   ![image](https://github.com/user-attachments/assets/f43c2587-5e42-4411-9178-7a2d4724671d)
+
+
+
+
+
+
+   
+
+
+---
+
+## Backup & Restore
+
+### Performing a database backup using pgAdmin in Docker:
+![image](https://github.com/user-attachments/assets/9a82d92c-3994-4083-b60d-1f59119c0b17)
+
+
+### Restoring the database:
+![image](https://github.com/user-attachments/assets/46098bab-3fba-42d0-aa1d-a6ebbdf9e6c1)
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
 # 🧑‍💻 DB5785 - PostgreSQL and Docker Workshop 🗄️🐋
 
 This workshop will guide you through setting up and managing a _PostgreSQL database_ using Docker.  
