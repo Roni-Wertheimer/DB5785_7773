@@ -5,19 +5,19 @@
 # Stage 1
 ---
 
-## Table of Contents
+### Table of Contents
 
 1. [Introduction](#introduction)
 2. [ERD & DSD Diagrams](#erd--dsd-diagrams)
 3. [Design Decisions](#design-decisions)
 4. [Data Insertion Methods](#data-insertion-methods)
 5. [Backup & Restore](#backup--restore)
-6. [Select Queries](#select-queries)
-7. [DELETE Queries](#delete-queries)
-8. [UPDATE Queries](#update-queries)
-9. [Rollback & Commit](#rollback--commit)
-10. [Constraints](#constraints)
-7. ד
+6. [Select Queries](#part-a-select-queries)
+7. [DELETE Queries](#part-b-delete-queries)
+8. [UPDATE Queries](#part-c-update-queries)
+9. [Rollback & Commit](#part-d-rollback--commit)
+10. [Constraints](#part-e-constraints)
+
 ---
 
 ## Introduction
@@ -121,7 +121,9 @@ To populate the database with realistic test data, we used three methods:
 
 ### Query 1
 **Description:**  
+
 השאילתה מחזירה רשימת חדרים שמתוכננים לניקיון היום וסטטוס המשימה שלהם הוא "ממתין". הפלט כולל את מספר החדר, סטטוס הניקיון, סוג החדר ותאריך המשימה.
+
 
 **Execution and Result Screenshot:**  
 ![image](https://github.com/user-attachments/assets/4b07e1e7-6263-49ad-aa84-2bc0671a29f9)
@@ -130,6 +132,7 @@ To populate the database with realistic test data, we used three methods:
 
 ### Query 2
 **Description:**  
+
 השאילתה מציגה סיכום חודשי של כמויות שימוש בפריטי מלאי לניקיון, כולל שם הפריט, החודש, השנה וסך הכמות שהשתמשו בה.
 
 **Execution and Result Screenshot:**  
@@ -140,7 +143,10 @@ To populate the database with realistic test data, we used three methods:
 
 ### Query 3
 **Description:**  
+
 השאילתה מציגה את הממוצע של השימוש בחומרי הניקיון למשימת ניקיון לפי סוג החדר.
+
+
 
 **Execution and Result Screenshot:**  
 ![image](https://github.com/user-attachments/assets/b6b7878b-0dda-4f62-af92-c942ce829e33)
@@ -150,7 +156,9 @@ To populate the database with realistic test data, we used three methods:
 
 ### Query 4
 **Description:**  
+
 השאילתה מציגה את מספר בקשות התחזוקה הפתוחות לכל חדר, כולל סטטוסים "ממתין" או "בתהליך", וממיינת מהחדר עם הכי הרבה בקשות.
+
 
 **Execution and Result Screenshot:**  
 ![image](https://github.com/user-attachments/assets/e1839506-15e6-496b-939c-e52de5f9bf00)
@@ -160,7 +168,9 @@ To populate the database with realistic test data, we used three methods:
 
 ### Query 5
 **Description:**  
+
 השאילתה מציגה את השם המלא ומספר עבודות התחזוקה של כל העובדים שהיו להם עבודות תחזוקה החודש.
+
 
 **Execution and Result Screenshot:**  
 ![image](https://github.com/user-attachments/assets/765c16ee-7026-4f30-83fe-3aea38c45e6d)
@@ -170,7 +180,9 @@ To populate the database with realistic test data, we used three methods:
 
 ### Query 6 
 **Description:**  
+
 השאילתה מציגה את החדרים בהם לא בוצע ניקיון בשבוע האחרון.
+
 
 **Execution and Result Screenshot:**  
 ![image](https://github.com/user-attachments/assets/25f5e52f-b40b-4235-8396-f7bba886773c)
@@ -180,7 +192,9 @@ To populate the database with realistic test data, we used three methods:
 
 ### Query 7
 **Description:**  
+
 השאילתה מציגה את כל משימות הניקיון שבוצעו בשלושת החודשים האחרונים, כולל מספר חדר, קומה, סוג חדר, תאריך, סטטוס המשימה ושם העובד שביצע אותה.
+
 
 **Execution and Result Screenshot:**  
 ![image](https://github.com/user-attachments/assets/9e54f5a5-9f1b-43fb-a77e-0cf14a216350)
@@ -189,8 +203,10 @@ To populate the database with realistic test data, we used three methods:
 ---
 
 ### Query 8
-**Description:**  
+**Description:** 
+
 השאילתה מציגה את כל החדרים שהמחיר שלהם ללילה גבוה מהמחיר הבסיסי של סוג החדר.
+
 
 **Execution and Result Screenshot:**  
 ![image](https://github.com/user-attachments/assets/5f91155f-d96c-4c95-8e45-383d4ec27cf8)
@@ -202,10 +218,13 @@ To populate the database with realistic test data, we used three methods:
 
 ### DELETE Query 1
 **Description:**  
+
 מחיקת משימות ניקיון שבוצעו לפני יותר משנה
+
 
 **Before DELETE – Screenshot of table:**  
 ![image](https://github.com/user-attachments/assets/83917d91-697d-41c9-bc71-636adf589edd)
+
 
 **Execution and After DELETE Screenshot:**  
 ![image](https://github.com/user-attachments/assets/21f39b93-dde4-4cab-a9f9-42a9184f7e16)
@@ -215,10 +234,13 @@ To populate the database with realistic test data, we used three methods:
 
 ### DELETE Query 2
 **Description:**  
+
 מחיקת הקצאות תחזוקה לעובדים שהתפטרו
+
 
 **Before DELETE – Screenshot of table:**  
 ![image](https://github.com/user-attachments/assets/d8d70b1f-7ea4-4f5f-b28d-1e13b6727163)
+
 
 **Execution and After DELETE Screenshot:**  
 ![image](https://github.com/user-attachments/assets/4bb56307-7c3f-4f5b-94f2-2a3b2ab80d42)
@@ -227,10 +249,13 @@ To populate the database with realistic test data, we used three methods:
 
 ### DELETE Query 3
 **Description:**  
+
 מחיקת שימוש במלאי שלא שייך לאף משימה
+
 
 **Before DELETE – Screenshot of table:**  
 ![image](https://github.com/user-attachments/assets/458effd3-8575-4279-aaa2-c8b2c2c5f69c)
+
 
 **Execution and After DELETE Screenshot:**  
 ![image](https://github.com/user-attachments/assets/ab1f6d6c-b7d8-4571-9299-f812da31ef9f)
@@ -241,9 +266,12 @@ To populate the database with realistic test data, we used three methods:
 
 ### UPDATE Query 1
 **Description:**  
+
 עדכון סטטוס ניקיון לחדרים שבוצעה בהם משימת ניקיון בשלושה ימים האחרונים
+
 **Before UPDATE – Screenshot:**  
 ![image](https://github.com/user-attachments/assets/827863cd-195b-49a3-b0a0-5aa62904f2db)
+
 
 **Execution and After UPDATE Screenshot:**  
 ![image](https://github.com/user-attachments/assets/fc4fda66-b306-4322-9d70-f3addb2dcd7f)
@@ -252,10 +280,13 @@ To populate the database with realistic test data, we used three methods:
 
 ### UPDATE Query 2
 **Description:**  
+
 עדכן חדרים ל-"Unavailable" אם יש להם בקשות תחזוקה בתהליך ב־7 הימים האחרונים
+
 
 **Before UPDATE – Screenshot:**  
 ![image](https://github.com/user-attachments/assets/6e42f6e3-8a48-4f32-98b1-e651e8123bcc)
+
 
 **Execution and After UPDATE Screenshot:**  
 ![image](https://github.com/user-attachments/assets/ce76dc23-b8ed-4434-a0e3-f1d685b5ac72)
@@ -265,10 +296,13 @@ To populate the database with realistic test data, we used three methods:
 
 ### UPDATE Query 3
 **Description:**  
+
 סימון עובדים שלא בוצעה להם הקצאה בחודש האחרון כ"לא פעילים זמנית"
+
 
 **Before UPDATE – Screenshot:**  
 ![image](https://github.com/user-attachments/assets/a3fb7faf-0063-4518-865b-a0ba47e949b1)
+
 
 **Execution and After UPDATE Screenshot:**  
 ![image](https://github.com/user-attachments/assets/87f5d77b-4305-41de-b9b8-7670094b69d2)
@@ -316,7 +350,9 @@ To populate the database with realistic test data, we used three methods:
 
 ### Constraint 1
 **Description:**  
+
 1.	אילוץ CHECK  על כמות בצריכת מלאי (שיהיה חיובי בלבד)
+2.	
 
 **Screenshot:**  
 ![image](https://github.com/user-attachments/assets/77d29c46-6c6a-4530-bd69-fec60cd2bcce)
@@ -329,7 +365,9 @@ To populate the database with realistic test data, we used three methods:
 
 ### Constraint 2
 **Description:**  
+
 אילוץ DEFAULT על עמודת Status בטבלת MaintenanceRequest
+
 
 **Screenshot:**  
 ![image](https://github.com/user-attachments/assets/0b4550ba-9b87-4b46-a152-e8a94abdc3f3)
@@ -342,7 +380,9 @@ To populate the database with realistic test data, we used three methods:
 
 ### Constraint 3
 **Description:**  
+
 אילוץ DEFAULT על עמודת IsActive בטבלת Staff – ברירת מחדל לעובד חדש
+
 
 **Screenshot:**  
 ![image](https://github.com/user-attachments/assets/5871ce72-2164-414e-b1e4-99e4ef6c5404)
