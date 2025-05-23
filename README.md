@@ -45,6 +45,126 @@ Its main goal is to streamline hotel operations, ensure consistent maintenance, 
 ![image RS](https://github.com/user-attachments/assets/7e3ef2df-119d-4db9-836b-76d8bb119fd4)
 
 ---
+# תיעוד ישויות וקשרים - מערכת ניהול מלון
+
+## 1. RoomType (סוג חדר)
+**מה זה:** מייצג סוגים שונים של חדרים במלון (למשל יחיד, זוגי, סוויטה).
+
+**מאפיינים:**
+- `RoomTypeId` – מזהה ייחודי.
+- `TypeName` – שם סוג החדר.
+- `MaxOccupancy` – מספר אורחים מקסימלי.
+- `BasePrice` – מחיר בסיס ללילה.
+
+**קשרים:**
+- `Room.RoomTypeId` → קושר בין חדרים לסוג שלהם.
+
+---
+
+## 2. Staff (צוות)
+**מה זה:** מייצג עובדים במלון.
+
+**מאפיינים:**
+- `StaffId` – מזהה ייחודי.
+- `FirstName`, `LastName` – שם פרטי ומשפחה.
+- `Role` – תפקיד (למשל מנקה, תחזוקה).
+- `PhoneNumber` – טלפון.
+- `EmploymentDate` – תאריך התחלת עבודה.
+- `IsActive` – האם פעיל.
+
+**קשרים:**
+- מקושר ל-`Housekeeping` ו-`MaintenanceRequest` דרך טבלאות שיוך:
+  - `AssignKeepingStaff`
+  - `AssignMaintenanceStaff`
+
+---
+
+## 3. InventoryUsage (שימוש במלאי)
+**מה זה:** מייצג פריטים שנעשה בהם שימוש (למשל חומרי ניקוי, חלקי חילוף).
+
+**מאפיינים:**
+- `UsageId` – מזהה שימוש.
+- `ItemName` – שם פריט.
+- `Quantity` – כמות.
+
+**קשרים:**
+- `KeepingInventory` – שימוש בפריטים במשימות ניקיון.
+- `MaintenanceInventory` – שימוש בפריטים בבקשות תחזוקה.
+
+---
+
+## 4. Room (חדר)
+**מה זה:** מייצג חדר במלון.
+
+**מאפיינים:**
+- `RoomId`, `RoomNumber` – מזהה ומספר חדר.
+- `PricePerNight` – מחיר ללילה.
+- `AvailabilityStatus`, `CleaningStatus` – זמינות וניקיון.
+- `Floor` – קומה.
+- `RoomTypeId` – סוג חדר.
+
+**קשרים:**
+- מקושר ל-`RoomType`
+- מקושר ל-`Housekeeping` ו-`MaintenanceRequest` לפי `RoomId`.
+
+---
+
+## 5. Housekeeping (משימת ניקיון)
+**מה זה:** מייצג משימת ניקיון בחדר.
+
+**מאפיינים:**
+- `TaskID`, `TaskDate`, `Status`, `RoomId`.
+
+**קשרים:**
+- `AssignKeepingStaff` – אנשי צוות שביצעו את המשימה.
+- `KeepingInventory` – פריטי מלאי שנעשה בהם שימוש במשימה.
+
+---
+
+## 6. MaintenanceRequest (בקשת תחזוקה)
+**מה זה:** מתעד תקלה או בעיה בחדר שדורשת טיפול.
+
+**מאפיינים:**
+- `RequestId`, `IssueDescription`, `RequestDate`, `Status`, `RoomId`.
+
+**קשרים:**
+- `AssignMaintenanceStaff` – אנשי צוות שטיפלו בבקשה.
+- `MaintenanceInventory` – פריטי מלאי שנעשה בהם שימוש בטיפול.
+
+---
+
+## 7. AssignKeepingStaff
+**מה זה:** טבלת קשר בין משימות ניקיון לעובדים שביצעו.
+
+**קשר:** 
+- Many-to-Many בין `Housekeeping` ל-`Staff`.
+
+---
+
+## 8. AssignMaintenanceStaff
+**מה זה:** טבלת קשר בין בקשות תחזוקה לעובדים שטיפלו בהן.
+
+**קשר:** 
+- Many-to-Many בין `MaintenanceRequest` ל-`Staff`.
+
+---
+
+## 9. MaintenanceInventory
+**מה זה:** טבלת קשר בין בקשות תחזוקה לפריטי מלאי שנעשה בהם שימוש.
+
+**קשר:** 
+- Many-to-Many בין `MaintenanceRequest` ל-`InventoryUsage`.
+
+---
+
+## 10. KeepingInventory
+**מה זה:** טבלת קשר בין משימות ניקיון לפריטי מלאי שנעשה בהם שימוש.
+
+**קשר:** 
+- Many-to-Many בין `Housekeeping` ל-`InventoryUsage`.
+
+
+---
 
 ## Design Decisions
 
