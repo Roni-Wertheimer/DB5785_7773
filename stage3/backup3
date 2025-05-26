@@ -1,0 +1,37 @@
+--
+-- PostgreSQL database cluster dump
+--
+
+-- Started on 2025-05-26 12:08:43 UTC
+
+SET default_transaction_read_only = off;
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+
+--
+-- Roles
+--
+
+CREATE ROLE postgres;
+ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'SCRAM-SHA-256$4096:YtGzNlY9RCZdTnxlkpxDhQ==$pWvteoAo+WePBI9WhKgIJf895Bt3/o5y6WLhZZxBcCs=:/2MI8oNq1eqPz9r+lzSgzE9F9k2LUHHYNzuT1CHGJaQ=';
+CREATE ROLE roniwert;
+ALTER ROLE roniwert WITH NOSUPERUSER INHERIT NOCREATEROLE NOCREATEDB LOGIN NOREPLICATION NOBYPASSRLS PASSWORD 'SCRAM-SHA-256$4096:Ns4zoDkDW8ZkZ+qfDckTHg==$7fi9XqfS/jRw49rUALbcBdTA29QOZYdbxOVDPijM66Q=:3q61V5ITqvJPGBZgwc38JHKj1Sgi3JVBUJtyG8OI/Os=';
+
+--
+-- User Configurations
+--
+
+
+
+
+
+
+
+
+-- Completed on 2025-05-26 12:08:43 UTC
+
+--
+-- PostgreSQL database cluster dump complete
+--
+
