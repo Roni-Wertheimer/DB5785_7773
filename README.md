@@ -17,7 +17,15 @@
 8. [UPDATE Queries](#part-c-update-queries)
 9. [Rollback & Commit](#part-d-rollback--commit)
 10. [Constraints](#part-e-constraints)
-
+11. [DSD and ERD Diagrams](#dsd-and-erd-diagrams)  
+12. [Integration Decisions](#integration-decisions)  
+13. [Process and Commands Explanation](#process-and-commands-explanation)  
+14. [Views](#views)  
+    - [View 1 – Original Department](#view-1--original-department)  
+    - [View 2 – Received Department](#view-2--received-department)  
+15. [Queries on Views](#queries-on-views)
+    - [Queries on view 1](#queries-on-view-1)  
+    - [Queries on view 2](#queries-on-view-2) 
 ---
 
 ## Introduction
@@ -513,6 +521,105 @@ To populate the database with realistic test data, we used three methods:
 
 ---
 
+## DSD and ERD Diagrams
+
+### DSD and ERD before integration  
+![secondDsd](https://github.com/user-attachments/assets/cddb8431-7d00-44b2-96b5-1d596bd60a61)
+![secondErd](https://github.com/user-attachments/assets/e977b7ef-e678-480e-98d3-2397811fee27)
+
+### ERD and DSD after integration  
+![afterIntegration](https://github.com/user-attachments/assets/15552f2c-feb9-42ac-adbf-c57e8f55526a)
+![dsdAterIntegration](https://github.com/user-attachments/assets/2e19ecf6-2ab2-4900-b0c7-93aeb2f77cdc)
+---
+
+## Integration Decisions
+
+במהלך אינטגרציית בסיסי הנתונים, התקבלו ההחלטות הבאות:
+
+- המרה של שמות עמודות כדי ליצור אחידות (`roomId` במקום `Room_Id`).
+- ויתור על השדה capacity בטבלה Room של הdataBase השני מכיוון שבdataBase שלנו יש שדה זהה בטבלה roomType.
+- מיזוג הנתונים על ידי עדכון מזהים (IDs) חופפים והסרת כפילויות.
+- יצירת טבלאות foreign tables לקישור בין בסיסי הנתונים באמצעות `postgres_fdw`.
+
+---
+
+## Process and Commands Explanation
+
+השלבים המרכזיים שבוצעו:
+- חיבור בין בסיסי הנתונים באמצעות הפקודה:
+  ```sql
+  CREATE EXTENSION IF NOT EXISTS postgres_fdw;
+  CREATE SERVER integration_server FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host 'localhost', dbname 'otherdb', port '5432');
+  CREATE USER MAPPING FOR CURRENT_USER SERVER integration_server OPTIONS (user 'postgres', password 'password');
+
+- מיזוג הטבלה Rooms לטבלה Romm:
+INSERT INTO Room (RoomId, RoomNumber, PricePerNight, AvailabilityStatus, CleaningStatus, Floor, RoomTypeId)
+SELECT 
+    room_id,
+    room_number::INTEGER,
+    round((random() * (800 - 200) + 200)::numeric, 2) AS PricePerNight,
+    (ARRAY['Available', 'Occupied', 'Maintenance'])[floor(random() * 3 + 1)] AS AvailabilityStatus,
+    (ARRAY['Clean', 'Dirty', 'In Progress'])[floor(random() * 3 + 1)] AS CleaningStatus,
+    floor,
+    (
+        SELECT RoomTypeId
+        FROM RoomType
+        ORDER BY random()
+        LIMIT 1
+    ) AS RoomTypeId
+FROM  external_rooms
+WHERE room_id NOT IN (SELECT RoomId FROM Room);
+
+ - שינוי שם השדה room_id ל roomid בטבלה reservation:
+ALTER TABLE reservation
+RENAME COLUMN room_id TO roomid;
+
+
+## Views
+
+### View 1 – Original Department
+
+מבט שמציג משימות ניקיון עם שם העובד והסטטוס:
+
+
+![image](https://github.com/user-attachments/assets/8f3d6a8c-5ebc-4348-a1dd-f58ebff4e831)
+
+![image](https://github.com/user-attachments/assets/45e2ae3b-5e39-4ef0-a30f-d29fb0481404)
+
+
+### View 2 – Received Department
+
+מבט המציג את שמות האורחים עם פרטי ההזמנה:
+
+
+![image](https://github.com/user-attachments/assets/480baaf4-1048-4458-8ae8-2ab44b61ccb2)
+
+![image](https://github.com/user-attachments/assets/cb2afd21-e471-4638-a9b8-b1cce19eaa0d)
+
+
+## Queries on Views
+
+### Queries on view 1
+רשימת משימות ניקיון שטרם הושלמו, עם שם העובד והקומה
+
+
+![image](https://github.com/user-attachments/assets/302b1087-6239-4a4d-bc63-441c68b11958)
+
+כמה משימות ביצע כל עובד ניקיון פעיל
+
+
+![image](https://github.com/user-attachments/assets/733fa852-89ca-4fbd-858c-5303a8a229ca)
+
+
+### Queries on view 2
+
+מספר הזמנות לפי סטטוס
+
+![image](https://github.com/user-attachments/assets/39977c22-77f6-403a-bb7f-5b64a9a19b62)
+
+הזמנות שצפויות להתחיל בשבוע הקרוב
+
+![image](https://github.com/user-attachments/assets/8654a55d-f6a4-475a-b096-41fe971bbba6)
 
 
 
